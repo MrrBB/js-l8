@@ -2,7 +2,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	let tab = document.getElementsByClassName('info-header-tab'),
 		tabContent = document.getElementsByClassName('info-tabcontent'),
-		info = document.getElementsByClassName('info')[0];
+		info = document.getElementsByClassName('info')[0],
+		aboutUs = document.getElementById('btn-about'),
+		aboutUsInfo = document.getElementById('about'),
+		photo = document.getElementById('btn-photo'),
+		price = document.getElementById('btn-price'),
+		contacts = document.getElementById('btn-contacts');
 
 
 	function hideTabContent(a) {
@@ -93,9 +98,11 @@ window.addEventListener('DOMContentLoaded', function() {
 				seconds.innerHTML = t.seconds;
 
 
-				if(t.total <= 0){
-					clearInterval(timeInterval);
-				}
+				
+
+				// if(t.total <= 0){
+				// 	clearInterval(timeInterval);
+				// }
 			}
 
 			updateClock();
@@ -103,4 +110,47 @@ window.addEventListener('DOMContentLoaded', function() {
 	}
 
 	setClock('timer', deadLine);
+
+//scroll
+
+		const scrollLink = document.querySelectorAll('a[href^="#"]'), 
+    			animationTime = 0.3; 
+		for (let i = 0; i < scrollLink.length; i++) {
+
+		    scrollLink[i].addEventListener('click', function(e) { 
+		        event.preventDefault();
+		        let w = window.pageYOffset,
+		            hash = this.href.replace(/[^#]*(.*)/, '$1');
+		        	topCoordinates = document.querySelector(hash).getBoundingClientRect().top,
+		            start = null;
+
+		            //вау
+		        requestAnimationFrame(step);
+
+
+		        function step(time) {
+
+		        	//ааа!?
+		            if (start === null)
+		            	 start = time;
+
+
+		            let progress = time - start,
+		                r = (topCoordinates < 0 ? Math.max(w - progress/animationTime, w + topCoordinates) : Math.min(w + progress/animationTime, w + topCoordinates));
+		            window.scrollTo(0,r);
+		            if (r != w + topCoordinates) {
+		                requestAnimationFrame(step)
+		            } else {
+		                location.hash = hash
+		            }
+		        }
+		    }, false);
+		}
+
 })	
+
+
+// aboutUs = document.getElementById('#about'),
+// 		photo = document.getElementById('#photo'),
+// 		price = document.getElementById('#price'),
+// 		contacts = document.getElementById('#contacts');
